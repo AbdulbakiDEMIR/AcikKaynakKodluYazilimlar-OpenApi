@@ -12,4 +12,4 @@ Bu projede herhangi bir telif hakkı bulunmamaktadır. Tüm hakları saklıdır.
 
 ## İletişim
 
-Herhangi bir soru, öneri veya geri bildirim için lütfen baki_demir_bs@hotmail.com mail adresi üzerinden benim ile iletişime geçin.
+Herhangi bir soru, öneri veya geri bildirim için lütfen baki_demir_bs@hotmail.com mail adresi üzerinden Abdülbaki Demir ile iletişime geçin.

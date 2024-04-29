@@ -1,6 +1,6 @@
 # Notice
 
-Bu projede üçüncü parti bir yazılım veya kütüphane kullanılmamıştır. Tüm kod ve dosyalar, Abdülbaki Demir tarafından oluşturulmuş ve [MIT Lisansı](LICENSE.md) altında lisanslanmıştır.
+Bu projede üçüncü parti bir yazılım veya kütüphane kullanılmamıştır. Tüm kod ve dosyalar, Abdülbaki Demir tarafından oluşturulmuş ve [MIT Lisansı](LICENSE) altında lisanslanmıştır.
 
 ## Lisans
 

@@ -1,7 +1,30 @@
 # **Sipariş Takip API**
 
 Bu API, bir sipariş takip sistemi için oluşturulmuş bir RESTful servistir. Bu servis, sipariş oluşturma, listeleme, okuma, güncelleme ve silme gibi temel işlemleri gerçekleştirmek için HTTP metotları kullanır.
-
+## **Kurulum**
+Apiyi kurmak için öncekile bu repoyu indirmelisin.
+```bash
+git clone https://github.com/AbdulbakiDEMIR/AcikKaynakKodluYazilimlar-OpenApi.git
+``` 
+Apiyi indirdikten sonra bu klasörün içerisine girip dosyanın içerisindeki dosyalardan bir imaj oluşturmalısın.
+```bash
+cd AcikKaynakKodluYazilimlar-OpenApi
+```
+Aşağıdaki kodda bir imaj oluşturuyoruz `siparis-takip-api-imaj` yazılı alan oluşturulan imajın ismidir. Buraya istediğimiz adı yazabiliriz.
+```bash
+docker build -t siparis-takip-api-imaj .
+```
+Bu adımdan sonra imaj ile bir container oluşturuyoruz. `--name` etiketinden sonra gelen `siparis-api` değeri oluşan containerın ismidir. `siparis-takip-api-imaj` ise container oluşturulurken kullanılan imajın ismidir. `127.0.0.1:3000` ifadesi container ile local hostun 3000 numaralı portu üzerinden iletişim kurulucağını belirdir. 5000 değeri ise container içerisindeki uygulamanın local hostun 5000 numaralı portundan haberleştiğini gösterir.  
+```bash
+docker run -dp 127.0.0.1:3000:5000 --name siparis-api siparis-takip-api-imaj
+```
+Bu adımlardan sonra api docker üzerinden kurulup çalışmaya başlamıştır.Çalışan containerı durdurmak için docker stop, tekrar başlatmak için docker start komutu kullanılır.
+```bash
+docker stop siparis-api
+```
+```bash
+docker start siparis-api
+```
 ## **Kullanım**
 
 Bu API'yi kullanmak için bir HTTP istemcisi (örneğin, Postman veya cURL) veya bir uygulama geliştirebilirsiniz. Aşağıda API'nin kullanımına ilişkin örnekler bulunmaktadır:

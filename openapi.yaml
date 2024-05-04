@@ -1,0 +1,238 @@
+openapi: 3.0.3
+info:
+  title: Sipairş Takip 
+  description: |-
+    Bu api bir siparişi oluşturma, silme, sipariş durumunu güncelleme, siparişleri listeleme ve bir siparişi görüntüleme gibi fonksiyonlara sahiptir. Bu sayede basit seviyede siparişleri yönetebilirsiniz.
+  version: 1.0.1
+paths:
+  /:
+    post:
+      summary: Sipariş Oluşturma
+      description: Yeni bir sipariş oluşturmak için bu metod kullanılır
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer:
+                  type: string
+                  description: Sipariş veren kişinin adı
+                  example: Abdülbaki Demir
+                products: 
+                  $ref: '#/components/schemas/Product'
+              required:
+                - customer
+                - products
+      responses:
+        '201':
+          description: Sipariş başarıyla oluşturuldu
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: Hatalı veri girişi olunca çalışır
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties: 
+                  message:
+                    type: string
+                    description: hata mesajı
+                    example: Hatalı veri girişi
+    get:
+      summary: Tüm Siparişleri Getir
+      responses:
+        '200':
+          description: Başarılı istek
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404': 
+          description: Başarısız istek
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: hata mesajı
+                    example: Sipariş yok
+          
+  /{id}:
+    get:
+      summary: Siparişler arasında id değeri gönderilen siparişi geri döndürüyor
+      parameters:
+        - name: id
+          in: path
+          description: Sipariş ID bilgisi
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+            example: 1
+      responses:
+        '200':
+          description: Başarılı istek
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: Belirlenen id değerine uygun sipariş bulunamadı
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: hata mesajı
+                    example: Sipariş yok
+    delete:
+      summary: Siparişi Sil
+      parameters:
+        - name: id
+          in: path
+          description: Sipariş numarası
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+            example: 1
+      responses:
+        '200':
+          description: Sipariş başarıyla silindi
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Sipariş silindiğinde dönen mesaj
+                    example: 1 id değerine sahip sipariş silindi
+        '404':
+          description: Silme işlemi gerçekleşmediğinde çalışır
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Silme işlemi sırasında oluşan hata mesajı
+                    example: 1 id değerine sahip sipariş bulunamadı
+    put: 
+      summary: Sipariş güncelleme
+      parameters:
+        - name: id
+          in: path
+          description: Sipariş numarası
+          required: true
+          schema: 
+            type: integer
+            minimum: 0
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: 
+                newState: 
+                  type: string
+                  description: Siparişin değişecek olan state değeri
+                  example: Kargoya Verildi
+      responses:
+        '200':
+          description: Sipariş başarıyla güncellendi
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: sipariş güncellendiğinde dönen mesaj
+                    example: 1 id değerine sahip sipariş 'Kargoya Verildi' durumuna güncellendi
+        '404':
+          description: Güncelleme işlemi başarılı olmadı
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Güncelleme işlemi başarısız olduğunda dönen mesaj
+                    example: 1 id değerine sahip sipariş bulunamadı
+                    
+                    
+components:
+  schemas:
+    Order:
+      type: array
+      items:
+        type: object
+        properties:
+          orderID:
+            type: integer
+            description: sipariş id bilgisi
+            example: 1
+          orderDate: 
+            type: string
+            description: sipariş tarihi ve saati
+            example: 2024-04-28T16:17:04.825Z
+          customer: 
+            type: string
+            description: Sipariş veren kişinin adı
+            example: Abdülbaki Demir
+          total:
+            type: integer
+            description: Siparişin toplam tutarı
+            example: 20
+          products:
+            type: array
+            description: sipariş verilen ürünlerin bilgileri
+            items: 
+              $ref: '#/components/schemas/Product'
+          state:
+            type: string
+            description: Siparişin durumu
+            example: Sipariş oluşturuldu
+        required:
+          - orderID
+          - orderDate
+          - customer
+          - total
+          - products
+          - state
+    Product:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Ürünün adı
+          example: kalem
+        price:
+          type: number
+          description: Ürünün birim fiyatı
+          example: 10
+        piece:
+          type: integer
+          description: Üründen kaç adet olduğu
+          example: 2
+      required:
+        - name
+        - price
+        - piece
+              
+      
+  
